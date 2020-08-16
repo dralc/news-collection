@@ -3,7 +3,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
-import collectionRouter from './routes/collection.mjs';
+import collectionRouter from './routes/collection.js';
 
 const app = express();
 

@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-import app from '../src/app.mjs';
+import app from '../src/app.js';
 import Debug from 'debug';
 import http from 'http';
 const debug = Debug('news-collection:server');

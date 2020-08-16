@@ -1,12 +1,11 @@
 import test from 'ava';
 import testListen from 'test-listen';
 import * as http from 'http';
-import app from '../src/app.mjs';
+import app from '../src/app.js';
 import {
-	testKey,
 	HM_REFS_KEY,
-	LI_COLL_REFS_KEY_PREFIX } from '../src/dao/keygen.mjs';
-import { ingest, rollbackIngest } from '../src/dao/collection.mjs';
+	LI_COLL_REFS_KEY_PREFIX } from '../src/dao/keygen.js';
+import { ingest, rollbackIngest } from '../src/dao/collection.js';
 import nodeFetch from "node-fetch";
 
 test.beforeEach(async (t) => {
@@ -15,7 +14,7 @@ test.beforeEach(async (t) => {
 	t.context.serverUrl = await testListen(t.context.server);
 
 	// Ingest test data into DB
-	t.context.ingestedKeys = await ingest(testKey(HM_REFS_KEY), testKey(LI_COLL_REFS_KEY_PREFIX));
+	t.context.ingestedKeys = await ingest(HM_REFS_KEY, LI_COLL_REFS_KEY_PREFIX);
 });
 
 test.afterEach.always(async (t) => {

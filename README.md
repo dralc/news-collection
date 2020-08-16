@@ -22,3 +22,5 @@ REDIS_HOST      | localhost |
 - `npm run dev`
 - `npm test`
 
+## VSCode configs
+See [vscode configs]('vscodeconfigs.md') for examples of configs for launch.json

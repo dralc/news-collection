@@ -1,5 +1,6 @@
 {
   "name": "news-collection",
+  "type": "module",
   "version": "1.0.0",
   "private": true,
   "description": "",
@@ -19,10 +20,11 @@
     "test-listen": "^1.1.0"
   },
   "scripts": {
-    "start": "node --require dotenv/config ./bin/www.mjs",
-    "dev": "nodemon --require dotenv/config ./bin/www.mjs",
-    "test": "ava",
-    "ingest": "node --require dotenv/config src/ingest.mjs"
+    "start": "npm run redis:server && node --require dotenv/config ./bin/www.js",
+    "dev": "nodemon --exec npm start",
+    "test": "npm run redis:server && ava",
+    "redis:server": "redis-server ./redis.conf --daemonize yes",
+    "ingest": "node --require dotenv/config src/ingest.js"
   },
   "repository": {
     "type": "git",

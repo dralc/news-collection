@@ -1,4 +1,4 @@
-import { readRefs } from './dao/collection.mjs';
+import { readRefs } from './dao/collection.js';
 
 /**
  * Read ingested references

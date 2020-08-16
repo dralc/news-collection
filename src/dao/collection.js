@@ -10,7 +10,7 @@ import { promisify } from 'util';
 import Redis from 'ioredis';
 import {
 	HM_REFS_KEY,
-	LI_COLL_REFS_KEY_PREFIX } from './keygen.mjs';
+	LI_COLL_REFS_KEY_PREFIX } from './keygen.js';
 
 const redis = new Redis(process.env.REDIS_PORT, process.env.REDIS_HOST);
 
