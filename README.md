@@ -12,6 +12,7 @@ var             | default   | valid values
 DEBUG           |  -        | news-collection:*
 REDIS_PORT      | 6378      | 
 REDIS_HOST      | localhost |
+INGEST_URL      |           |
 
 ## Start the service
 - Ensure you've ingested some data into Redis by running

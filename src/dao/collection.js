@@ -4,24 +4,26 @@
 	List     li_coll:refs:(collectionId) -> Strings (referenceIds)
 */
 
-import fs from 'fs';
+import { readFile } from 'fs/promises';
 import { resolve } from 'path';
-import { promisify } from 'util';
 import Redis from 'ioredis';
 import {
 	HM_REFS_KEY,
 	LI_COLL_REFS_KEY_PREFIX } from './keygen.js';
+import nodeFetch from 'node-fetch';
+import { writeFileMkDir } from '../utils.js';
 
 const redis = new Redis(process.env.REDIS_PORT, process.env.REDIS_HOST);
 
 /**
  * Ingests the references from a collection
+ * 
+ * @param {String} url The URL to ingest JSON data from
  * @returns {Array<String>} The keys ingested
  */
-export async function ingest(referencesKey = HM_REFS_KEY, collectionKeyPrefix = LI_COLL_REFS_KEY_PREFIX) {
+export async function ingest(url = process.env.INGEST_URL) {
 	try {
-		const file_st = await promisify(fs.readFile)( resolve('raw', 'content.json') );
-		const collection_o = JSON.parse(file_st);
+		const collection_o = await getRaw(url);
 		const references_o = collection_o.content.references;
 		
 		const payload = new Map();
@@ -29,15 +31,15 @@ export async function ingest(referencesKey = HM_REFS_KEY, collectionKeyPrefix = 
 			payload.set(id, JSON.stringify(references_o[id]));
 		}
 
-		const collectionKey = `${collectionKeyPrefix}${collection_o.content.id}`;
+		const collectionKey = `${LI_COLL_REFS_KEY_PREFIX}${collection_o.content.id}`;
 		const pl = redis.pipeline();
 
-		pl.hset(referencesKey, payload);
+		pl.hset(HM_REFS_KEY, payload);
 		pl.unlink(collectionKey);
 		pl.rpush(collectionKey, [...payload.keys()]);
 		await pl.exec();
 
-		return [referencesKey, collectionKey];
+		return [HM_REFS_KEY, collectionKey];
 
 	} catch (er) {
 		console.error(`Handling error...`, er);
@@ -75,4 +77,26 @@ export async function readRefs(collectionId) {
 
 	const res = await pipeline.exec();
 	return res.map(it => it[1]);
+}
+
+/**
+ * Gets the raw data from {url} and parsed as an object.
+ * The raw data is written to file and retrieved on subsequent 'gets'
+ * 
+ * @returns {Object}
+ */
+async function getRaw(url) {
+	let raw;
+	
+	try {
+		const file_st = await readFile( resolve('raw', 'content.json') );
+		raw = JSON.parse(file_st);
+	}
+	catch (er) {
+		const res = await nodeFetch(url);
+		raw = await res.json();
+		await writeFileMkDir( resolve('raw', 'content.json'), JSON.stringify(raw) );
+	}
+
+	return raw;
 }

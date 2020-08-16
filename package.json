@@ -11,12 +11,12 @@
     "http-errors": "~1.6.3",
     "ioredis": "^4.17.3",
     "jade": "~1.11.0",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "ava": "^3.11.1",
     "dotenv": "^8.2.0",
-    "node-fetch": "^2.6.0",
     "test-listen": "^1.1.0"
   },
   "scripts": {
