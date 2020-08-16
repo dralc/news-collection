@@ -38,6 +38,14 @@ test('Get invalid collection ID', async (t) => {
 	t.is(dat.message, 'Invalid collection id');
 });
 
+test('Get non-existent but valid collection ID', async (t) => {
+	const res = await nodeFetch(`${t.context.serverUrl}/collection/0000e3caadf6e496d240aac7ca8a432c`);
+	const dat = await res.json();
+
+	t.is(res.status, 404);
+	t.is(dat.length, 0);
+});
+
 test('Get invalid route', async (t) => {
 	const res = await nodeFetch(`${t.context.serverUrl}/95/bad/0n3`);
 	const dat = await res.json();

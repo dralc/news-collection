@@ -3,7 +3,7 @@ import { readRefs } from './dao/collection.js';
 /**
  * Read ingested references
  * Map each reference to a view format
- * @returns {Array<Object>} JSON array of views
+ * @returns {Promise<Array<Object>>} JSON array of views
  */
 export async function transform(collectionId) {
 	const refs_ar = await readRefs(collectionId);

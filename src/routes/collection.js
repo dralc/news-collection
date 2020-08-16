@@ -17,7 +17,11 @@ router.param('collectionId', (req, res, next, id) => {
 router.get('/:collectionId', async function(req, res, next) {
   const collectionId = req.params.collectionId;
   const data = await transform(collectionId);
-
+  
+  if (!data.length) {
+    res.status(404)
+  }
+  
   res.send(data);
 });
   
