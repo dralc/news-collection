@@ -1,6 +1,6 @@
 # news-collection
 
-- A microservice that takes in raw/content.json and returns a different view of a collection's references.
+- A microservice that takes in remote data for a collection at {INGEST_URL} and returns a different view of a collection's references.
 
 [Postman usage examples](https://documenter.getpostman.com/view/1592722/T1LPDmyz?version=latest)
 
@@ -19,7 +19,7 @@ INGEST_URL      |           |
 	- `npm run ingest`
 - `npm start`
 
-### Development
+### Development and Testing
 - `npm run dev`
 - `npm test`
 
