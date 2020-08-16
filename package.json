@@ -1,0 +1,37 @@
+{
+  "name": "news-collection",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "ioredis": "^4.17.3",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "ava": "^3.11.1",
+    "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.0",
+    "test-listen": "^1.1.0"
+  },
+  "scripts": {
+    "start": "node --require dotenv/config ./bin/www.mjs",
+    "dev": "nodemon --require dotenv/config ./bin/www.mjs",
+    "test": "ava",
+    "ingest": "node --require dotenv/config src/ingest.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dralc/news-collection.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dralc/news-collection/issues"
+  },
+  "homepage": "https://github.com/dralc/news-collection#readme"
+}
